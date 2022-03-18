@@ -4,7 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import { FontAwesome } from "@expo/vector-icons";
 import { Button, Input } from "react-native-elements";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
 
 
     //-----to input fields----//
@@ -14,7 +14,11 @@ const LoginScreen = () => {
 
     const signIn = () => {
         console.log("Klikk signIn")
-    }
+    };
+
+    const handleRegister = ()=> {
+
+    };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -25,7 +29,7 @@ const LoginScreen = () => {
         <Input placeholder="Password" secureTextEntry type="password" value={password} onChangeText={(text) => setPassword(text)}/>
       </View>
       <Button title="Login" containerStyle={styles.button} onPress={signIn}/>
-      <Button title="Sing Up" containerStyle={styles.button} type="outline"/>
+      <Button title="Sing Up" containerStyle={styles.button} type="outline" onPress={() => navigation.navigate("Register")}/>
     </KeyboardAvoidingView>
   );
 };
