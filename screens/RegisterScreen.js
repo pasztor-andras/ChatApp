@@ -13,14 +13,14 @@ export default function RegisterScreen({ navigation }) {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(authUser => {
-          authUser.user.updateProfile({
-              displayName: name
-          })
+        authUser.user.updateProfile({
+          displayName: name,
+        });
       })
       .catch(error => alert(error.message));
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
       headerBackTitle: "Back to Login",
     });
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   inputContainer: {
-    width: 200,
+    width: 300,
   },
   button: {
     width: 100,

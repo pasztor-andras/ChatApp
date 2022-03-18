@@ -15,6 +15,7 @@ const LoginScreen = ({ navigation }) => {
 
     const signIn = () => {
         console.log("Klikk signIn")
+        auth.signInWithEmailAndPassword(email, password).catch((error) => alert(error))
     };
 
 
@@ -36,7 +37,7 @@ const LoginScreen = ({ navigation }) => {
       <FontAwesome name="user-circle-o" size={100} color="black" />
       <View style={styles.inputContainer}>
         <Input placeholder="Email" autofocus type="email" value={email} onChangeText={(text) => setEmail(text)}/>
-        <Input placeholder="Password" secureTextEntry type="password" value={password} onChangeText={(text) => setPassword(text)}/>
+        <Input placeholder="Password" secureTextEntry type="password" value={password} onChangeText={(text) => setPassword(text)} onSubmitEditing={signIn}/>
       </View>
       <Button title="Login" containerStyle={styles.button} onPress={signIn}/>
       <Button title="Sign Up" containerStyle={styles.button} type="outline" onPress={() => navigation.navigate("Register")}/>
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
   inputContainer: {
-      width: 200,
+      width: 300,
   },
   button:{
       marginTop: 10,
