@@ -3,9 +3,9 @@ import { StyleSheet, Text, View } from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
 
 
-const CustomListItem = ({ id, chatName, enterChat}) => {
+const CustomListItem = ({ id, chatName, accesChat}) => {
   return (
-    <ListItem style={styles.messagesContainer} key={id} bottomDivider>
+    <ListItem onPress={() => accesChat(id, chatName)} style={styles.messagesContainer} key={id} bottomDivider>
         <Avatar 
         rounded 
         source={{ uri: "https://cdn-icons.flaticon.com/png/512/552/premium/552721.png?token=exp=1647603541~hmac=4e846ae54db9f77517df3417781b5b3f"}}/>

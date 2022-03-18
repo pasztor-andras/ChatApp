@@ -5,26 +5,33 @@ import CustomListItem from "../components/CustomListItem";
 import { auth, db } from "../firebase";
 
 const HomeScreen = ({ navigation }) => {
-    const [chats, setChats] = useState([]);
-  
-    
-    const signOut = () => {
+  const [chats, setChats] = useState([]);
+
+  const signOut = () => {
     auth.signOut().then(() => {
       navigation.replace("Login");
     });
   };
 
+  const accesChat = (id, chatName) => {
+    navigation.navigate("Chat", {
+        id: id,
+        chatName: chatName
+    })
+  }
+
   useEffect(() => {
-      const unsubscribe = db.collection("chats").onSnapshot(snapshot => (
-          setChats(snapshot.docs.map(doc => ({
-              id: doc.id,
-              data: doc.data()
-          })))
-      ))
+    const unsubscribe = db.collection("chats").onSnapshot(snapshot =>
+      setChats(
+        snapshot.docs.map(doc => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      )
+    );
 
-      return unsubscribe;
-  }, [])
-
+    return unsubscribe;
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -54,10 +61,10 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView>
-      <ScrollView>
-          {chats.map(({id, data: { chatName }}) => (
-              <CustomListItem key={id} id={id} chatName={chatName}/>
-          ))}
+      <ScrollView style={styles.chatRoomContainer}>
+        {chats.map(({ id, data: { chatName } }) => (
+          <CustomListItem key={id} id={id} chatName={chatName} accesChat={accesChat}/>
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
@@ -66,6 +73,9 @@ const HomeScreen = ({ navigation }) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  chatRoomContainer: {
+    height: "100%",
+  },
   headerLeft: {
     marginLeft: 40,
   },
