@@ -82,18 +82,24 @@ const ChatScreen = ({ navigation, route: { params } }) => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <>
             <ScrollView>
-                {messages.map(({id, data}) => (
-                    data.email === auth.currentUser.email ? (
-                        <View key={id}>
-                            <Text>{data.message}</Text>
-                        </View>
-                    ) 
-                    : (
-                        <View key={id}>
-                            <Text style={styles.senderText}>{data.message}</Text>
-                        </View>
-                    )
-                ))}
+              {messages.map(({ id, data }) =>
+                data.email === auth.currentUser.email ? (
+                  <View key={id} style={styles.reciever}>
+                    <Entypo name="user" size={24} color="black" />
+                    <Text style={styles.recieverText}>{data.message}</Text>
+                  </View>
+                ) : (
+                  <View key={id} style={styles.sender}>
+                    <Avatar
+                      rounded
+                      source={{
+                        uri: "https://cdn-icons.flaticon.com/png/512/552/premium/552721.png?token=exp=1647603541~hmac=4e846ae54db9f77517df3417781b5b3f",
+                      }}
+                    />
+                    <Text style={styles.senderText}>{data.message}</Text>
+                  </View>
+                )
+              )}
             </ScrollView>
             <View style={styles.footer}>
               <TextInput
@@ -137,6 +143,25 @@ const styles = StyleSheet.create({
     color: "#eee",
     borderRadius: 30,
   },
+  reciever: {
+      position: "relative",
+      alignSelf: "flex-end",
+      marginRight: 15,
+      marginBottom: 20,
+      backgroundColor: "#cecece",
+      borderRadius: 20,
+      maxWidth: "80%"
+  },
+  recieverText: {},
+  sender: {
+      position: "relative",
+      alignSelf: "flex-start",
+      margin: 15,
+      maxHeight: "80%",
+      borderRadius: 20,
+      backgroundColor: "#2b68e6",
+  },
+  senderText: {},
   footer: {
     flexDirection: "row",
     alignItems: "center",
