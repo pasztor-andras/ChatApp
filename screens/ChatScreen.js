@@ -1,13 +1,37 @@
 import React, { useLayoutEffect, useState } from "react";
-import { KeyboardAvoidingView, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { Avatar } from "react-native-elements";
 import { Entypo } from "@expo/vector-icons";
+import { auth, db } from "../firebase";
+import firebase from "firebase/compat";
 
 const ChatScreen = ({ navigation, route: { params } }) => {
   //console.log(params.id)
-  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
 
-  const sendMessage = () => {};
+  const sendMessage = () => {
+    Keyboard.dismiss();
+    db.collection("chats").doc(params.id).collection("messages").add({
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      message: input,
+      displayName: auth.currentUser.displayName,
+      email: auth.currentUser.email,
+    });
+    setInput("");
+  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -34,19 +58,57 @@ const ChatScreen = ({ navigation, route: { params } }) => {
     });
   }, [navigation]);
 
+  useLayoutEffect(() => {
+    const unsubscribe = db
+      .collection("chats")
+      .doc(params.id)
+      .collection("messages")
+      .orderBy("timestamp", "desc")
+      .onSnapshot(snapshot =>
+        setMessages(
+          snapshot.docs.map(doc => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+        )
+      );
+    return unsubscribe;
+  }, [params]);
+
   return (
-    <SafeAreaView >
+    <SafeAreaView>
       <StatusBar style="light"></StatusBar>
       <KeyboardAvoidingView style={styles.container}>
-        <>
-          <ScrollView></ScrollView>
-          <View style={styles.footer}>
-            <TextInput placeholder="Let's Chat Message" value={message} onChangeText={text => setMessage(text)} style={styles.textInput} />
-            <TouchableOpacity onPress={sendMessage}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <>
+            <ScrollView>
+                {messages.map(({id, data}) => (
+                    data.email === auth.currentUser.email ? (
+                        <View key={id}>
+                            <Text>{data.message}</Text>
+                        </View>
+                    ) 
+                    : (
+                        <View key={id}>
+                            <Text style={styles.senderText}>{data.message}</Text>
+                        </View>
+                    )
+                ))}
+            </ScrollView>
+            <View style={styles.footer}>
+              <TextInput
+                placeholder="Let's Chat Message"
+                value={input}
+                onChangeText={text => setInput(text)}
+                onSubmitEditing={sendMessage}
+                style={styles.textInput}
+              />
+              <TouchableOpacity onPress={sendMessage}>
                 <Entypo name="arrow-bold-right" size={24} color="blue" />
-            </TouchableOpacity>
-          </View>
-        </>
+              </TouchableOpacity>
+            </View>
+          </>
+        </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -56,26 +118,24 @@ export default ChatScreen;
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-
+    flex: 1,
   },
   icon: {},
   chatTitle: {
     color: "#fff",
-    // fontWeight: 800,
     marginLeft: 10,
   },
   textInput: {
-      bottom: 0,
-      height: 40,
-      flex: 1,
-      marginRight: 15,
-      borderColor: "transparent",
-      backgroundColor: "#ececec",
-      borderWidth: 1,
-      padding: 10,
-      color: "#eee",
-      borderRadius: 30
+    bottom: 0,
+    height: 40,
+    flex: 1,
+    marginRight: 15,
+    borderColor: "transparent",
+    backgroundColor: "#ececec",
+    borderWidth: 1,
+    padding: 10,
+    color: "#eee",
+    borderRadius: 30,
   },
   footer: {
     flexDirection: "row",
