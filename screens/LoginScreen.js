@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, KeyboardAvoidingView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { FontAwesome } from "@expo/vector-icons";
 import { Button, Input } from "react-native-elements";
+import { auth } from "../firebase";
 
 const LoginScreen = ({ navigation }) => {
 
@@ -16,9 +17,18 @@ const LoginScreen = ({ navigation }) => {
         console.log("Klikk signIn")
     };
 
-    const handleRegister = ()=> {
 
-    };
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((authUser) => {
+            console.log(authUser)
+            if(authUser) {
+                navigation.navigate("Home")
+            }
+        });
+        return () => {
+            unsubscribe()
+        }
+    }, []);
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="height">

@@ -1,19 +1,30 @@
 import { View, Text, StyleSheet, KeyboardAvoidingView, StatusBar } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Button, Input } from "react-native-elements";
+import { auth } from "../firebase";
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   //---confirm password feature----//
 
-  console.log(name);
-
   const register = () => {
-    console.log("register klikk");
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(authUser => {
+          authUser.user.updateProfile({
+              displayName: name
+          })
+      })
+      .catch(error => alert(error.message));
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerBackTitle: "Back to Login",
+    });
+  }, [navigation]);
 
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
