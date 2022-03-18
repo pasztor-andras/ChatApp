@@ -1,0 +1,8 @@
+const firebaseConfig = {
+    apiKey: "AIzaSyDdmgj7qzzVSbBMgXYaVrVJ9_RSQdnj200",
+    authDomain: "let-s-chat-3cfb6.firebaseapp.com",
+    projectId: "let-s-chat-3cfb6",
+    storageBucket: "let-s-chat-3cfb6.appspot.com",
+    messagingSenderId: "678143885235",
+    appId: "1:678143885235:web:f7d943c2658c1eaaf495c6"
+  };
