@@ -21,7 +21,7 @@ const LoginScreen = ({ navigation }) => {
     };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView style={styles.container} behavior="height">
       <StatusBar style="light"></StatusBar>
       <FontAwesome name="user-circle-o" size={100} color="black" />
       <View style={styles.inputContainer}>
@@ -29,7 +29,8 @@ const LoginScreen = ({ navigation }) => {
         <Input placeholder="Password" secureTextEntry type="password" value={password} onChangeText={(text) => setPassword(text)}/>
       </View>
       <Button title="Login" containerStyle={styles.button} onPress={signIn}/>
-      <Button title="Sing Up" containerStyle={styles.button} type="outline" onPress={() => navigation.navigate("Register")}/>
+      <Button title="Sign Up" containerStyle={styles.button} type="outline" onPress={() => navigation.navigate("Register")}/>
+      <View style={{ height: 100 }}></View>
     </KeyboardAvoidingView>
   );
 };
