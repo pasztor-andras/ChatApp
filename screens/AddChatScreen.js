@@ -44,6 +44,6 @@ export default AddChatScreen
 
 const styles = StyleSheet.create({
     container: {
-
+        padding: 30,
     }
 })
