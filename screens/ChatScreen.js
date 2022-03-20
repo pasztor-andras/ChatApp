@@ -12,15 +12,21 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { Avatar } from "react-native-elements";
 import { Entypo } from "@expo/vector-icons";
 import { auth, db } from "../firebase";
 import firebase from "firebase/compat";
+import { FontAwesome } from "@expo/vector-icons";
+
+//import { updateDoc, serverTimestamp } from "firebase/firestore";
 
 const ChatScreen = ({ navigation, route: { params } }) => {
   //console.log(params.id)
-  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([]);
+
+
+  //const docRef = doc(db, 'objects', 'some-id');
+
 
   const sendMessage = () => {
     Keyboard.dismiss();
@@ -39,12 +45,7 @@ const ChatScreen = ({ navigation, route: { params } }) => {
       headerBackTitleVisible: false,
       headerTitle: () => (
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Avatar
-            rounded
-            source={{
-              uri: "https://cdn-icons.flaticon.com/png/512/552/premium/552721.png?token=exp=1647603541~hmac=4e846ae54db9f77517df3417781b5b3f",
-            }}
-          />
+          <FontAwesome name="user-circle" size={24} color="black" />
           <Text style={styles.chatTitle}>{params.chatName}</Text>
         </View>
       ),
@@ -80,23 +81,19 @@ const ChatScreen = ({ navigation, route: { params } }) => {
       <StatusBar style="light"></StatusBar>
       <KeyboardAvoidingView style={styles.container}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <>
+          <View>
             <ScrollView>
               {messages.map(({ id, data }) =>
                 data.email === auth.currentUser.email ? (
                   <View key={id} style={styles.reciever}>
-                    <Entypo name="user" size={24} color="black" />
+                    <FontAwesome name="user-circle-o" size={24} color="black" style={{marginLeft: 10}}/>
                     <Text style={styles.recieverText}>{data.message}</Text>
                   </View>
                 ) : (
                   <View key={id} style={styles.sender}>
-                    <Avatar
-                      rounded
-                      source={{
-                        uri: "https://cdn-icons.flaticon.com/png/512/552/premium/552721.png?token=exp=1647603541~hmac=4e846ae54db9f77517df3417781b5b3f",
-                      }}
-                    />
+                    <FontAwesome name="user-circle" size={24} color="black" style={{marginRight: 10}} />
                     <Text style={styles.senderText}>{data.message}</Text>
+                    <Text style={styles.senderName}>{data.displayName}</Text>
                   </View>
                 )
               )}
@@ -110,10 +107,10 @@ const ChatScreen = ({ navigation, route: { params } }) => {
                 style={styles.textInput}
               />
               <TouchableOpacity onPress={sendMessage}>
-                <Entypo name="arrow-bold-right" size={24} color="blue" />
+                <Entypo name="arrow-bold-right" size={24} color="#2b68e6" />
               </TouchableOpacity>
             </View>
-          </>
+            </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -124,7 +121,7 @@ export default ChatScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
   },
   icon: {},
   chatTitle: {
@@ -133,36 +130,43 @@ const styles = StyleSheet.create({
   },
   textInput: {
     bottom: 0,
-    height: 40,
-    flex: 1,
+    width: "80%",
+    // flex: 1,
     marginRight: 15,
-    borderColor: "transparent",
-    backgroundColor: "#ececec",
+    backgroundColor: "#ccc",
     borderWidth: 1,
+    borderColor: "transparent",
     padding: 10,
     color: "#eee",
     borderRadius: 30,
   },
   reciever: {
-      position: "relative",
-      alignSelf: "flex-end",
-      marginRight: 15,
-      marginBottom: 20,
-      backgroundColor: "#cecece",
-      borderRadius: 20,
-      maxWidth: "80%"
-  },
-  recieverText: {},
-  sender: {
-      position: "relative",
-      alignSelf: "flex-start",
-      margin: 15,
-      maxHeight: "80%",
-      borderRadius: 20,
-      backgroundColor: "#2b68e6",
+    position: "relative",
+    flexDirection: "row-reverse",
+    alignSelf: "flex-end",
+    marginRight: 20,
+    marginBottom: 20,
+    backgroundColor: "#cecece",
+    borderRadius: 20,
+    padding: 10,
+    maxWidth: "80%",
+},
+recieverText: {},
+sender: {
+    position: "relative",
+    flexDirection: "row",
+    alignSelf: "flex-start",
+    margin: 15,
+    maxHeight: "80%",
+    borderWidth: 1,
+    borderRadius: 20,
+    borderColor: "red",
+    padding: 10,
+    backgroundColor: "#2b68e6",
   },
   senderText: {},
   footer: {
+    marginTop: 50,
     flexDirection: "row",
     alignItems: "center",
     width: "100%",

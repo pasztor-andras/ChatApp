@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, KeyboardAvoidingView, StatusBar } from "react-native";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Input } from "react-native-elements";
 import { auth } from "../firebase";
 
@@ -20,6 +20,8 @@ export default function RegisterScreen({ navigation }) {
       .catch(error => alert(error.message));
   };
 
+
+  //-----working on IOS--------//
   useEffect(() => {
     navigation.setOptions({
       headerBackTitle: "Back to Login",
@@ -28,8 +30,8 @@ export default function RegisterScreen({ navigation }) {
 
   return (
     <KeyboardAvoidingView behavior="height" style={styles.container}>
-      <StatusBar style="light" />
-      <Text>Create a Let's Chat account</Text>
+      <StatusBar style="black" />
+      <Text style={styles.registerTitle}>Create a Let's Chat account</Text>
       <View style={styles.inputContainer}>
         <Input placeholder="Name" autoFocus type="text" value={name} onChangeText={text => setName(text)} />
         <Input placeholder="Email" type="email" value={email} onChangeText={text => setEmail(text)} />
@@ -56,8 +58,13 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#fff",
   },
+  registerTitle: {
+    fontSize: 24,
+    fontWeight: "bold"
+  },
   inputContainer: {
     width: 300,
+    
   },
   button: {
     width: 100,
