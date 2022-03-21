@@ -24,9 +24,7 @@ const ChatScreen = ({ navigation, route: { params } }) => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
 
-
   //const docRef = doc(db, 'objects', 'some-id');
-
 
   const sendMessage = () => {
     Keyboard.dismiss();
@@ -77,43 +75,41 @@ const ChatScreen = ({ navigation, route: { params } }) => {
   }, [params]);
 
   return (
-    <SafeAreaView>
+    <KeyboardAvoidingView style={styles.container}>
       <StatusBar style="light"></StatusBar>
-      <KeyboardAvoidingView style={styles.container}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View>
-            <ScrollView>
-              {messages.map(({ id, data }) =>
-                data.email === auth.currentUser.email ? (
-                  <View key={id} style={styles.reciever}>
-                    <FontAwesome name="user-circle-o" size={24} color="black" style={{marginLeft: 10}}/>
-                    <Text style={styles.recieverText}>{data.message}</Text>
-                  </View>
-                ) : (
-                  <View key={id} style={styles.sender}>
-                    <FontAwesome name="user-circle" size={24} color="black" style={{marginRight: 10}} />
-                    <Text style={styles.senderText}>{data.message}</Text>
-                    <Text style={styles.senderName}>{data.displayName}</Text>
-                  </View>
-                )
-              )}
-            </ScrollView>
-            <View style={styles.footer}>
-              <TextInput
-                placeholder="Let's Chat Message"
-                value={input}
-                onChangeText={text => setInput(text)}
-                onSubmitEditing={sendMessage}
-                style={styles.textInput}
-              />
-              <TouchableOpacity onPress={sendMessage}>
-                <Entypo name="arrow-bold-right" size={24} color="#2b68e6" />
-              </TouchableOpacity>
-            </View>
-            </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View>
+          <ScrollView>
+            {messages.map(({ id, data }) =>
+              data.email === auth.currentUser.email ? (
+                <View key={id} style={styles.reciever}>
+                  <FontAwesome name="user-circle-o" size={24} color="black" style={{ marginLeft: 10 }} />
+                  <Text style={styles.recieverText}>{data.message}</Text>
+                </View>
+              ) : (
+                <View key={id} style={styles.sender}>
+                  <FontAwesome name="user-circle" size={24} color="black" style={{ marginRight: 10 }} />
+                  <Text style={styles.senderText}>{data.message}</Text>
+                  <Text style={styles.senderName}>{data.displayName}</Text>
+                </View>
+              )
+            )}
+          </ScrollView>
+          <View style={styles.footer}>
+            <TextInput
+              placeholder="Let's Chat Message"
+              value={input}
+              onChangeText={text => setInput(text)}
+              onSubmitEditing={sendMessage}
+              style={styles.textInput}
+            />
+            <TouchableOpacity onPress={sendMessage}>
+              <Entypo name="arrow-bold-right" size={24} color="#2b68e6" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -121,7 +117,7 @@ export default ChatScreen;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
   },
   icon: {},
   chatTitle: {
@@ -131,7 +127,7 @@ const styles = StyleSheet.create({
   textInput: {
     bottom: 0,
     width: "80%",
-    // flex: 1,
+    flex: 1,
     marginRight: 15,
     backgroundColor: "#ccc",
     borderWidth: 1,
@@ -150,9 +146,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     maxWidth: "80%",
-},
-recieverText: {},
-sender: {
+  },
+  recieverText: {},
+  sender: {
     position: "relative",
     flexDirection: "row",
     alignSelf: "flex-start",
