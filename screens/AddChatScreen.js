@@ -31,7 +31,7 @@ const AddChatScreen = ({ navigation }) => {
       onChangeText={(text) => setInput(text)}
       onSubmitEditing={createChat}
       leftIcon={
-        <TouchableOpacity onPress={createChat}>
+        <TouchableOpacity onPress={createChat} >
             <Entypo name="arrow-with-circle-left" size={24} color="black" />
         </TouchableOpacity>
       }

@@ -2,7 +2,6 @@ import React, { useLayoutEffect, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
-  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -50,7 +49,7 @@ const ChatScreen = ({ navigation, route: { params } }) => {
       headerRight: () => (
         <View>
           <TouchableOpacity style={{ marginRight: 20 }}>
-            <Entypo name="camera" size={24} color="black" />
+            <Entypo name="camera" size={24} color="white" />
           </TouchableOpacity>
         </View>
       ),
@@ -62,7 +61,7 @@ const ChatScreen = ({ navigation, route: { params } }) => {
       .collection("chats")
       .doc(params.id)
       .collection("messages")
-      .orderBy("timestamp", "desc")
+      .orderBy("timestamp", "asc")
       .onSnapshot(snapshot =>
         setMessages(
           snapshot.docs.map(doc => ({
@@ -78,8 +77,8 @@ const ChatScreen = ({ navigation, route: { params } }) => {
     <KeyboardAvoidingView style={styles.container}>
       <StatusBar style="light"></StatusBar>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View>
-          <ScrollView>
+        <View style={{flex: 1}}>
+          <ScrollView contentContainerStyle={{ paddingTop: 10 }}>
             {messages.map(({ id, data }) =>
               data.email === auth.currentUser.email ? (
                 <View key={id} style={styles.reciever}>
@@ -118,6 +117,7 @@ export default ChatScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#eee"
   },
   icon: {},
   chatTitle: {
@@ -125,15 +125,15 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   textInput: {
-    bottom: 0,
-    width: "80%",
     flex: 1,
+    bottom: 0,
+    height: 40,
     marginRight: 15,
-    backgroundColor: "#ccc",
-    borderWidth: 1,
-    borderColor: "transparent",
     padding: 10,
     color: "#eee",
+    backgroundColor: "#ccc",
+    borderColor: "transparent",
+    borderWidth: 1,
     borderRadius: 30,
   },
   reciever: {
@@ -147,22 +147,34 @@ const styles = StyleSheet.create({
     padding: 10,
     maxWidth: "80%",
   },
-  recieverText: {},
+  recieverText: {
+    fontSize: 16,
+    color: "#000"
+  },
   sender: {
     position: "relative",
     flexDirection: "row",
     alignSelf: "flex-start",
     margin: 15,
     maxHeight: "80%",
-    borderWidth: 1,
     borderRadius: 20,
-    borderColor: "red",
     padding: 10,
-    backgroundColor: "#2b68e6",
+    backgroundColor: "#2b88d6",
   },
-  senderText: {},
+  senderText: {
+    fontSize: 16,
+    color: "#fff"
+  },
+  senderName: {
+    position: "absolute",
+    left: 15,
+    top: 40,
+    color: "#fff",
+    backgroundColor: "#aaa",
+    borderRadius: 10,
+    padding: 4,
+  },
   footer: {
-    marginTop: 50,
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
