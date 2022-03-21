@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import CustomListItem from "../components/CustomListItem";
 import { auth, db } from "../firebase";
@@ -41,8 +41,9 @@ const HomeScreen = ({ navigation }) => {
       headerTintColor: "#000",
       headerLeft: () => (
         <View style={styles.headerLeft}>
-          <TouchableOpacity onPress={signOut}>
+          <TouchableOpacity onPress={signOut} style={{ alignItems: "center" }}>
             <Entypo name="user" size={24} color="black" />
+            <Text>Logout</Text>
           </TouchableOpacity>
         </View>
       ),
@@ -74,7 +75,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   chatRoomContainer: {
-    height: "100%",
+    height: "100%"
   },
   headerLeft: {
     marginLeft: 40,

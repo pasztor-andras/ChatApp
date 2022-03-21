@@ -19,7 +19,6 @@ const CustomListItem = ({ id, chatName, accesChat}) => {
                 {chatName}
             </ListItem.Title>
             <ListItem.Subtitle numberOfLines={1}>
-              {lastMessages}
               hello
             </ListItem.Subtitle>
         </ListItem.Content>
@@ -31,5 +30,6 @@ export default CustomListItem;
 
 const styles = StyleSheet.create({
     chatsTitle: {
+      fontSize: 24,
     },
 });
