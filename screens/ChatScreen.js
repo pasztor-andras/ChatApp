@@ -19,7 +19,6 @@ import { FontAwesome } from "@expo/vector-icons";
 //import { updateDoc, serverTimestamp } from "firebase/firestore";
 
 const ChatScreen = ({ navigation, route: { params } }) => {
-  //console.log(params.id)
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
 
@@ -68,11 +67,11 @@ const ChatScreen = ({ navigation, route: { params } }) => {
             id: doc.id,
             data: doc.data(),
           }))
-        )
-      );
-    return unsubscribe;
-  }, [params]);
-
+          )
+          );
+          return unsubscribe;
+        }, [params]);
+        
   return (
     <KeyboardAvoidingView style={styles.container}>
       <StatusBar style="light"></StatusBar>

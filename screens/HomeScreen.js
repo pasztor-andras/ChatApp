@@ -68,7 +68,7 @@ const HomeScreen = ({ navigation }) => {
     <SafeAreaView>
       <ScrollView style={styles.chatRoomContainer}>
         {chats.map(({ id, data: { chatName } }) => (
-          <CustomListItem key={id} id={id} chatName={chatName} accessChat={accessChat} deleteChat={deleteChat}/>
+          <CustomListItem key={id} id={id} chatName={chatName} accessChat={accessChat}/>
         ))}
       </ScrollView>
     </SafeAreaView>

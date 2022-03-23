@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, KeyboardAvoidingView, StatusBar } from "react-n
 import React, { useEffect, useState } from "react";
 import { Button, Input } from "react-native-elements";
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth"
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState("");
@@ -10,16 +10,15 @@ export default function RegisterScreen({ navigation }) {
   const [password, setPassword] = useState("");
   //---confirm password feature----//
 
-  const register = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(authUser => {
-        authUser.user.updateProfile({
-          displayName: name,
-        });
-      })
-      .catch(error => alert(error.message));
+  const auth = getAuth();
+  const register = async () => {
+    const { user } = await createUserWithEmailAndPassword(auth, email, password)
+    console.log(user)
+    await updateProfile(user, {
+      displayName: name
+    })
+    .catch(error => alert(error.message));
   };
-
 
   //-----working on IOS--------//
   useEffect(() => {
@@ -60,11 +59,10 @@ const styles = StyleSheet.create({
   },
   registerTitle: {
     fontSize: 24,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   inputContainer: {
     width: 300,
-    
   },
   button: {
     width: 100,
