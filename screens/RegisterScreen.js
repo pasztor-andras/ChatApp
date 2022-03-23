@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, KeyboardAvoidingView, StatusBar } from "react-n
 import React, { useEffect, useState } from "react";
 import { Button, Input } from "react-native-elements";
 import { auth } from "../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth"
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState("");
@@ -10,8 +11,7 @@ export default function RegisterScreen({ navigation }) {
   //---confirm password feature----//
 
   const register = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then(authUser => {
         authUser.user.updateProfile({
           displayName: name,

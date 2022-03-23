@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback } from "react-native";
+import { View, StyleSheet, KeyboardAvoidingView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Fontisto } from "@expo/vector-icons";
 import { Button, Input } from "react-native-elements";
 import { auth } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth"
 
 const LoginScreen = ({ navigation }) => {
   //-----to input fields----//
@@ -12,7 +13,8 @@ const LoginScreen = ({ navigation }) => {
 
   const signIn = () => {
     console.log("Klikk signIn");
-    auth.signInWithEmailAndPassword(email, password).catch(error => alert(error));
+    signInWithEmailAndPassword(auth, email, password)
+    .catch(error => alert(error));
   };
 
   {
@@ -27,7 +29,6 @@ const LoginScreen = ({ navigation }) => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(authUser => {
-      console.log(authUser);
       if (authUser) {
         navigation.navigate("Home");
       }
@@ -42,8 +43,9 @@ const LoginScreen = ({ navigation }) => {
       <StatusBar style="light"></StatusBar>
       <Fontisto name="hipchat" size={100} color="black" />
       <View style={styles.inputContainer}>
-        <Input placeholder="Email" autofocus type="email" value={email} onChangeText={text => setEmail(text)} />
+        <Input testID="email" placeholder="Email" autofocus type="email" value={email} onChangeText={text => setEmail(text)} />
         <Input
+        testID="password"
           placeholder="Password"
           secureTextEntry
           type="password"

@@ -13,12 +13,16 @@ const HomeScreen = ({ navigation }) => {
     });
   };
 
-  const accesChat = (id, chatName) => {
+  const accessChat = (id, chatName) => {
     navigation.navigate("Chat", {
         id: id,
         chatName: chatName
     })
   }
+
+  const deleteChat = (id) => {
+    console.log("Delete")
+  } 
 
   useEffect(() => {
     const unsubscribe = db.collection("chats").onSnapshot(snapshot =>
@@ -64,7 +68,7 @@ const HomeScreen = ({ navigation }) => {
     <SafeAreaView>
       <ScrollView style={styles.chatRoomContainer}>
         {chats.map(({ id, data: { chatName } }) => (
-          <CustomListItem key={id} id={id} chatName={chatName} accesChat={accesChat}/>
+          <CustomListItem key={id} id={id} chatName={chatName} accessChat={accessChat} deleteChat={deleteChat}/>
         ))}
       </ScrollView>
     </SafeAreaView>
