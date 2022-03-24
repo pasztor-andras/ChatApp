@@ -45,7 +45,7 @@ const LoginScreen = ({ navigation }) => {
         />
       </View>
       <View stlye={styles.buttonContainer}>
-        <Button title="Login" containerStyle={styles.button} onPress={signIn} />
+        <Button testID="login-btn" title="Login" containerStyle={styles.button} onPress={signIn} />
         <Button title="Sign Up" containerStyle={styles.button} type="outline" onPress={() => navigation.navigate("Register")} />
       </View>
       <View style={{ height: 100 }}></View>

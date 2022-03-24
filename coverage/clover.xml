@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1648050399364" clover="3.2.0">
-  <project timestamp="1648050399366" name="All files">
-    <metrics statements="17" coveredstatements="8" conditionals="2" coveredconditionals="1" methods="6" coveredmethods="0" elements="25" coveredelements="9" complexity="0" loc="17" ncloc="17" packages="2" files="2" classes="2"/>
+<coverage generated="1648114170754" clover="3.2.0">
+  <project timestamp="1648114170755" name="All files">
+    <metrics statements="24" coveredstatements="13" conditionals="4" coveredconditionals="1" methods="9" coveredmethods="1" elements="37" coveredelements="15" complexity="0" loc="24" ncloc="24" packages="2" files="2" classes="2"/>
     <package name="ChatApp">
       <metrics statements="7" coveredstatements="6" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
       <file name="firebase.js" path="D:\Programming\Own-codes\ChatApp\firebase.js">
@@ -15,20 +15,27 @@
         <line num="27" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="ChatApp.components">
-      <metrics statements="10" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
-      <file name="CustomListItem.js" path="D:\Programming\Own-codes\ChatApp\components\CustomListItem.js">
-        <metrics statements="10" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
+    <package name="ChatApp.screens">
+      <metrics statements="17" coveredstatements="7" conditionals="2" coveredconditionals="0" methods="9" coveredmethods="1"/>
+      <file name="LoginScreen.js" path="D:\Programming\Own-codes\ChatApp\screens\LoginScreen.js">
+        <metrics statements="17" coveredstatements="7" conditionals="2" coveredconditionals="0" methods="9" coveredmethods="1"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
         <line num="17" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="23" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="41" count="1" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
       </file>
     </package>
   </project>

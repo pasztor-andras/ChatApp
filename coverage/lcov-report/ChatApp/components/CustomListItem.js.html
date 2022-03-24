@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.18% </span>
+                <span class="strong">16.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/11</span>
+                <span class='fraction'>2/12</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>0/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">18.18% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/10</span>
+                <span class='fraction'>2/11</span>
             </div>
         
             
@@ -108,13 +108,15 @@
 <a name='L43'></a><a href='#L43'>43</a>
 <a name='L44'></a><a href='#L44'>44</a>
 <a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -128,6 +130,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -148,7 +152,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -159,21 +163,23 @@ import { ListItem } from "react-native-elements";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { db } from "../firebase";
 &nbsp;
-const CustomListItem = <span class="fstat-no" title="function not covered" >({</span> id, chatName, accessChat }) =&gt; {
+const CustomListItem = <span class="fstat-no" title="function not covered" >({</span> id, chatName, accessChat, deleteChat }) =&gt; {
   const [lastMessages, setLastMessages] = <span class="cstat-no" title="statement not covered" >useState([]);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
     const unsubscribe = <span class="cstat-no" title="statement not covered" >db</span>
-    .collection("chats")
-    .doc(id)
-    .collection("messages")
-    .orderBy("timestamp", "desc")
-    .onSnapshot(<span class="fstat-no" title="function not covered" >(s</span>napshot) =&gt; {
-<span class="cstat-no" title="statement not covered" >      setLastMessages(snapshot.docs.map(<span class="fstat-no" title="function not covered" >(d</span>oc) =&gt; <span class="cstat-no" title="statement not covered" >doc.data())</span>)</span>
-    });
+      .collection("chats")
+      .doc(id)
+      .collection("messages")
+      .orderBy("timestamp", "desc")
+      .onSnapshot(<span class="fstat-no" title="function not covered" >sn</span>apshot =&gt; {
+<span class="cstat-no" title="statement not covered" >        setLastMessages(snapshot.docs.map(<span class="fstat-no" title="function not covered" >do</span>c =&gt; <span class="cstat-no" title="statement not covered" >doc.data())</span>);</span>
+      });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return unsubscribe;</span>
-  });
+<span class="cstat-no" title="statement not covered" >    setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      unsubscribe();</span>
+    }, 1000);
+  }, []);
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;ListItem key={id} onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >accessChat(id, chatName)}</span> style={styles.messagesContainer} bottomDivider&gt;
@@ -181,7 +187,7 @@ const CustomListItem = <span class="fstat-no" title="function not covered" >({</
       &lt;ListItem.Content&gt;
         &lt;ListItem.Title style={styles.chatsTitle}&gt;{chatName}&lt;/ListItem.Title&gt;
         &lt;ListItem.Subtitle numberOfLines={1}&gt;
-        {lastMessages?.[0]?.displayName}: {lastMessages?.[0]?.message}
+          {lastMessages?.[0]?.displayName}: {lastMessages?.[0]?.message}
         &lt;/ListItem.Subtitle&gt;
       &lt;/ListItem.Content&gt;
       &lt;TouchableOpacity onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >deleteChat(id)}</span>&gt;
@@ -205,7 +211,7 @@ const styles = StyleSheet.create({
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Wed Mar 23 2022 16:46:39 GMT+0100 (közép-európai téli idő)
+                at Thu Mar 24 2022 10:18:40 GMT+0100 (közép-európai téli idő)
             </div>
         <script src="../../prettify.js"></script>
         <script>

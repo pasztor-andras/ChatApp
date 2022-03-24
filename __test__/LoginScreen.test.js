@@ -1,13 +1,15 @@
 import React from "react";
 import LoginScreen from "../screens/LoginScreen";
-import { shallow } from "@wojtekmaj/enzyme-adapter-react-17";
+import { act, create } from "react-test-renderer";
 
-import renderer from "react-test-renderer";
+const login = create(<LoginScreen />);
 
-it("renders correctly", () => {
-    const tree = renderer.create(
-        <LoginScreen/>
-    ).toJSON();
-    expect(tree).toMatchSnapshot();
+test("snapshot", () => {
+  expect(login).toMatchSnapshot();
+});
+
+
+test("login button press", () => {
+    const button = login.root.findAllByProps({ testID: "login-btn" }).props;
+    act(() => button.onPress())
 })
-
