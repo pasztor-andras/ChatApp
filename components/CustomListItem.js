@@ -4,21 +4,23 @@ import { ListItem } from "react-native-elements";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { db } from "../firebase";
 
-const CustomListItem = ({ id, chatName, accessChat }) => {
+const CustomListItem = ({ id, chatName, accessChat, deleteChat }) => {
   const [lastMessages, setLastMessages] = useState([]);
 
   useEffect(() => {
     const unsubscribe = db
-    .collection("chats")
-    .doc(id)
-    .collection("messages")
-    .orderBy("timestamp", "desc")
-    .onSnapshot((snapshot) => {
-      setLastMessages(snapshot.docs.map((doc) => doc.data()))
-    });
+      .collection("chats")
+      .doc(id)
+      .collection("messages")
+      .orderBy("timestamp", "desc")
+      .onSnapshot(snapshot => {
+        setLastMessages(snapshot.docs.map(doc => doc.data()));
+      });
 
-    return unsubscribe;
-  });
+    setTimeout(() => {
+      unsubscribe();
+    }, 1000);
+  }, []);
 
   return (
     <ListItem key={id} onPress={() => accessChat(id, chatName)} style={styles.messagesContainer} bottomDivider>
@@ -26,7 +28,7 @@ const CustomListItem = ({ id, chatName, accessChat }) => {
       <ListItem.Content>
         <ListItem.Title style={styles.chatsTitle}>{chatName}</ListItem.Title>
         <ListItem.Subtitle numberOfLines={1}>
-        {lastMessages?.[0]?.displayName}: {lastMessages?.[0]?.message}
+          {lastMessages?.[0]?.displayName}: {lastMessages?.[0]?.message}
         </ListItem.Subtitle>
       </ListItem.Content>
       <TouchableOpacity onPress={() => deleteChat(id)}>

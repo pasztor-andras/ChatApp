@@ -21,7 +21,11 @@ const HomeScreen = ({ navigation }) => {
   }
 
   const deleteChat = (id) => {
-    console.log("Delete")
+    //console.log("Delete")
+    db
+    .collection("chats")
+    .doc(id)
+    .delete()
   } 
 
   useEffect(() => {
@@ -68,7 +72,7 @@ const HomeScreen = ({ navigation }) => {
     <SafeAreaView>
       <ScrollView style={styles.chatRoomContainer}>
         {chats.map(({ id, data: { chatName } }) => (
-          <CustomListItem key={id} id={id} chatName={chatName} accessChat={accessChat}/>
+          <CustomListItem key={id} id={id} chatName={chatName} accessChat={accessChat} deleteChat={deleteChat}/>
         ))}
       </ScrollView>
     </SafeAreaView>

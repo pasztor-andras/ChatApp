@@ -12,20 +12,10 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const signIn = () => {
-    console.log("Klikk signIn");
+    //console.log("Klikk signIn");
     signInWithEmailAndPassword(auth, email, password)
     .catch(error => alert(error));
   };
-
-  {
-    /*
-  const DismissKeyboard = ({ children }) => (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-    {children}
-    </TouchableWithoutFeedback>
-    );
-  */
-  }
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(authUser => {
