@@ -86,11 +86,12 @@ const styles = StyleSheet.create({
     height: "100%"
   },
   headerLeft: {
-    marginLeft: 40,
+    marginLeft: 10,
+    paddingRight: 20,
   },
   headerRight: {
     flexDirection: "row",
-    marginRight: 40,
+    marginRight: 20,
   },
   headerIcons: {
     margin: 5,

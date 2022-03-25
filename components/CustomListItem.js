@@ -28,7 +28,7 @@ const CustomListItem = ({ id, chatName, accessChat, deleteChat }) => {
       <ListItem.Content>
         <ListItem.Title style={styles.chatsTitle}>{chatName}</ListItem.Title>
         <ListItem.Subtitle numberOfLines={1}>
-          {lastMessages?.[0]?.displayName}: {lastMessages?.[0]?.message}
+          {`${lastMessages?.[0]?.displayName}${": "}`} {lastMessages?.[0]?.message}
         </ListItem.Subtitle>
       </ListItem.Content>
       <TouchableOpacity onPress={() => deleteChat(id)}>

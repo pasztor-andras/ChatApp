@@ -4,6 +4,7 @@ import { Input } from "react-native-elements";
 import { Entypo } from "@expo/vector-icons";
 import { db } from "../firebase";
 
+
 const AddChatScreen = ({ navigation }) => {
   const [input, setInput] = useState("");
 

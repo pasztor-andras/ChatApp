@@ -61,32 +61,42 @@ const ChatScreen = ({ navigation, route: { params } }) => {
       .doc(params.id)
       .collection("messages")
       .orderBy("timestamp", "asc")
-      .onSnapshot(snapshot =>
+      .onSnapshot((snapshot) =>
         setMessages(
-          snapshot.docs.map(doc => ({
+          snapshot.docs.map((doc) => ({
             id: doc.id,
             data: doc.data(),
           }))
-          )
-          );
-          return unsubscribe;
-        }, [params]);
-        
+        )
+      );
+    return unsubscribe;
+  }, [params]);
+
   return (
     <KeyboardAvoidingView style={styles.container}>
       <StatusBar style="light"></StatusBar>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <ScrollView contentContainerStyle={{ paddingTop: 10 }}>
             {messages.map(({ id, data }) =>
               data.email === auth.currentUser.email ? (
                 <View key={id} style={styles.reciever}>
-                  <FontAwesome name="user-circle-o" size={24} color="black" style={{ marginLeft: 10 }} />
+                  <FontAwesome
+                    name="user-circle-o"
+                    size={24}
+                    color="black"
+                    style={{ marginLeft: 10 }}
+                  />
                   <Text style={styles.recieverText}>{data.message}</Text>
                 </View>
               ) : (
                 <View key={id} style={styles.sender}>
-                  <FontAwesome name="user-circle" size={24} color="black" style={{ marginRight: 10 }} />
+                  <FontAwesome
+                    name="user-circle"
+                    size={24}
+                    color="black"
+                    style={{ marginRight: 10 }}
+                  />
                   <Text style={styles.senderText}>{data.message}</Text>
                   <Text style={styles.senderName}>{data.displayName}</Text>
                 </View>
@@ -97,13 +107,19 @@ const ChatScreen = ({ navigation, route: { params } }) => {
             <TextInput
               placeholder="Let's Chat Message"
               value={input}
-              onChangeText={text => setInput(text)}
+              onChangeText={(text) => setInput(text)}
               onSubmitEditing={sendMessage}
               style={styles.textInput}
             />
-            <TouchableOpacity onPress={sendMessage}>
-              <Entypo name="arrow-bold-right" size={24} color="#2b68e6" />
-            </TouchableOpacity>
+            {input ? (
+              <TouchableOpacity onPress={sendMessage}>
+                <Entypo name="arrow-bold-right" size={24} color="#2b68e6" />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={sendMessage} disabled>
+                <Entypo name="arrow-bold-right" size={24} color="#ccc" />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -116,7 +132,7 @@ export default ChatScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#eee"
+    backgroundColor: "#eee",
   },
   icon: {},
   chatTitle: {
@@ -148,7 +164,7 @@ const styles = StyleSheet.create({
   },
   recieverText: {
     fontSize: 16,
-    color: "#000"
+    color: "#000",
   },
   sender: {
     position: "relative",
@@ -162,7 +178,7 @@ const styles = StyleSheet.create({
   },
   senderText: {
     fontSize: 16,
-    color: "#fff"
+    color: "#fff",
   },
   senderName: {
     position: "absolute",
