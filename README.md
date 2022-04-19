@@ -1,5 +1,5 @@
 Live Chat Application
 
 Starting:
-npm install
+npm install;
 expo start
